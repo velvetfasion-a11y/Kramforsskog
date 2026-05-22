@@ -1,0 +1,6 @@
+node_modules/
+dist/
+.env
+.DS_Store
+apps/pocketbase/pb_data/
+apps/pocketbase/pb_data.horizons-export-backup/
