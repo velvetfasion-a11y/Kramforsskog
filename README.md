@@ -45,3 +45,9 @@ If you deploy from [Hostinger Horizons](https://horizons.hostinger.com), use the
 apps/web/          React frontend (Vite, Tailwind, shadcn/ui)
 apps/pocketbase/   PocketBase API, migrations, and hooks
 ```
+
+## Deploy (Render)
+
+See **[DEPLOY.md](./DEPLOY.md)** for connecting GitHub to Render and deploying with `render.yaml`.
+
+Repository: https://github.com/velvetfasion-a11y/Kramforsskog

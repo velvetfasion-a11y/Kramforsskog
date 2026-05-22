@@ -1,0 +1,42 @@
+# Render Blueprint: https://render.com/docs/blueprint-spec
+# After connecting this repo in Render, use "New > Blueprint" or sync the blueprint.
+
+services:
+  - type: web
+    name: kramforsskog-api
+    runtime: native
+    plan: free
+    region: frankfurt
+    rootDir: apps/pocketbase
+    buildCommand: chmod +x ./scripts/install-pocketbase.sh && ./scripts/install-pocketbase.sh
+    startCommand: ./pocketbase serve --http=0.0.0.0:$PORT --encryptionEnv=PB_ENCRYPTION_KEY --dir=./pb_data --migrationsDir=./pb_migrations --hooksDir=./pb_hooks --hooksWatch=false
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: PB_ENCRYPTION_KEY
+        sync: false
+      - key: PB_SUPERUSER_EMAIL
+        sync: false
+      - key: PB_SUPERUSER_PASSWORD
+        sync: false
+
+  - type: web
+    name: kramforsskog-web
+    runtime: static
+    plan: free
+    region: frankfurt
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist/apps/web
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: VITE_POCKETBASE_URL
+        fromService:
+          type: web
+          name: kramforsskog-api
+          envVarKey: RENDER_EXTERNAL_URL
