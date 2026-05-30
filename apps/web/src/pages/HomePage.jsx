@@ -5,8 +5,31 @@ import { motion } from 'framer-motion';
 import Header from '@/components/Header.jsx';
 import Footer from '@/components/Footer.jsx';
 import ContactForm from '@/components/ContactForm.jsx';
+import { Button } from '@/components/ui/button';
 
 function HomePage() {
+  const scrollToSection = (sectionId) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const serviceNumberContainer = {
+    hidden: {},
+    visible: {
+      transition: { staggerChildren: 0.4, delayChildren: 0.15 },
+    },
+  };
+
+  const serviceNumberItem = {
+    hidden: { color: 'hsla(142, 47%, 28%, 0.2)' },
+    visible: {
+      color: 'hsl(142, 47%, 28%)',
+      transition: { duration: 0.5, ease: 'easeOut' },
+    },
+  };
+
   const services = [
     {
       number: '01',
@@ -81,11 +104,19 @@ function HomePage() {
               className="drop-shadow-[0_2px_12px_rgba(0,0,0,0.75)]"
             >
               <h1 className="mb-6">
-                Träd som behöver fällas? Vi sköter det.
+                Träd som behövs fällas? Du bestämmer, vi fixar det.
               </h1>
-              <p className="text-xl md:text-2xl text-white max-w-3xl mx-auto leading-relaxed">
-                Trädfällning och skogsvård för små och stora uppdrag. Professionell service, pålitliga resultat.
+              <p className="text-xl md:text-2xl text-white max-w-3xl mx-auto leading-relaxed mb-10">
+                Små eller stora uppdrag, på tomten eller i skogen. Du får det gjort tryggt och proffsigt så du kan fokusera på det som är viktigt för dig.
               </p>
+              <Button
+                type="button"
+                size="lg"
+                onClick={() => scrollToSection('contact')}
+                className="bg-primary hover:bg-primary/90 text-white font-semibold px-10"
+              >
+                Kontakta oss
+              </Button>
             </motion.div>
           </div>
         </section>
@@ -102,7 +133,13 @@ function HomePage() {
               <h2 className="mb-16 text-center">Vad vi gör</h2>
             </motion.div>
 
-            <div className="space-y-12 max-w-4xl mx-auto">
+            <motion.div
+              className="space-y-12 max-w-4xl mx-auto"
+              variants={serviceNumberContainer}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.25 }}
+            >
               {services.map((service, index) => (
                 <motion.div
                   key={service.number}
@@ -112,16 +149,19 @@ function HomePage() {
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                   className="flex gap-8 items-start"
                 >
-                  <div className="text-6xl font-bold text-primary/20 leading-none">
+                  <motion.div
+                    className="text-6xl font-bold leading-none"
+                    variants={serviceNumberItem}
+                  >
                     {service.number}
-                  </div>
+                  </motion.div>
                   <div className="flex-1">
                     <h3 className="mb-3">{service.title}</h3>
                     <p className="text-muted-foreground">{service.description}</p>
                   </div>
                 </motion.div>
               ))}
-            </div>
+            </motion.div>
           </div>
         </section>
 
