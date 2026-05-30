@@ -10,44 +10,48 @@ function HomePage() {
   const services = [
     {
       number: '01',
-      title: 'Tree felling',
-      description: 'We cut down trees safely and efficiently. Single trees or entire stands.'
+      title: 'Trädfällning & Avverkning',
+      description:
+        'Vi utför avverkningsuppdrag från enskilda träd till kvalitetsgallring och slutavverkning, alltid till konkurrenskraftiga priser.'
     },
     {
       number: '02',
-      title: 'Forest management',
-      description: 'Thinning, clearing, and maintenance to keep your forest healthy and productive.'
+      title: 'Skogsvård & Skogsröjning',
+      description:
+        'Vi tar hand om din skog. Vi utför effektiv skogsröjning för att skapa en friskare och mer produktiv skogsmiljö.'
     },
     {
       number: '03',
-      title: 'Land clearing',
-      description: 'Prepare land for construction, agriculture, or new growth. Complete site preparation.'
+      title: 'Trädsäkring & Infrastruktur',
+      description:
+        'Säker avverkning och trädsäkring vid både befintliga och nya kraftledningar, samt specialkompetens för järnväg.'
     },
     {
       number: '04',
-      title: 'Property maintenance',
-      description: 'Ongoing care for private and commercial properties. Seasonal work and emergency response.'
+      title: 'Certifierad Expertis',
+      description:
+        'Oavsett projekt är vi fullt certifierade och har alla de utbildningar som krävs för att utföra arbetet tryggt och säkert.'
     }
   ];
 
   const workImages = [
     {
-      url: 'https://images.unsplash.com/photo-1677089883167-de687b715963',
-      caption: 'Cleared. Managed. Done.'
+      url: '/images/work-1.png',
+      caption: 'Röjt. Skött. Klart.'
     },
     {
-      url: 'https://images.unsplash.com/photo-1586400792375-d6b8f82db2e6',
-      caption: 'Professional results.'
+      url: '/images/work-2.png',
+      caption: 'Professionella resultat.'
     }
   ];
 
   return (
     <>
       <Helmet>
-        <title>Kramfors Skog AB - Professional tree felling and forest management</title>
+        <title>Kramfors Skog AB - Trädfällning och skogsvård</title>
         <meta
           name="description"
-          content="Professional tree felling, forest management, and land clearing services in Kramfors. We handle projects of all sizes with expertise and efficiency."
+          content="Trädfällning och skogsvård i Kramfors. Vi tar hand om uppdrag i alla storlekar – professionellt och pålitligt."
         />
       </Helmet>
 
@@ -62,11 +66,11 @@ function HomePage() {
           <div
             className="absolute inset-0 bg-cover bg-center"
             style={{
-              backgroundImage: 'url(https://images.unsplash.com/photo-1677078681777-220c1932a0fb)',
+              backgroundImage: 'url(/images/hero.png)',
               backgroundPosition: 'center'
             }}
           >
-            <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black/80"></div>
+            <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-black/25 to-black/45"></div>
           </div>
 
           <div className="container relative z-10 text-center text-white">
@@ -74,12 +78,13 @@ function HomePage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
+              className="drop-shadow-[0_2px_12px_rgba(0,0,0,0.75)]"
             >
               <h1 className="mb-6">
-                Got trees you want cut? We handle it.
+                Träd som behöver fällas? Vi sköter det.
               </h1>
-              <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed">
-                Tree felling and forest management for small to large operations. Professional service, reliable results.
+              <p className="text-xl md:text-2xl text-white max-w-3xl mx-auto leading-relaxed">
+                Trädfällning och skogsvård för små och stora uppdrag. Professionell service, pålitliga resultat.
               </p>
             </motion.div>
           </div>
@@ -94,7 +99,7 @@ function HomePage() {
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
             >
-              <h2 className="mb-16 text-center">What we do</h2>
+              <h2 className="mb-16 text-center">Vad vi gör</h2>
             </motion.div>
 
             <div className="space-y-12 max-w-4xl mx-auto">
@@ -129,7 +134,7 @@ function HomePage() {
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
             >
-              <h2 className="mb-16 text-center">Our work</h2>
+              <h2 className="mb-16 text-center">Vårt arbete</h2>
             </motion.div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
@@ -147,6 +152,7 @@ function HomePage() {
                       src={image.url}
                       alt={image.caption}
                       className="w-full h-full object-cover"
+                      style={{ objectPosition: 'center 26%' }}
                     />
                   </div>
                   <p className="text-center font-medium text-lg">{image.caption}</p>
@@ -166,14 +172,14 @@ function HomePage() {
               transition={{ duration: 0.5 }}
               className="max-w-4xl mx-auto"
             >
-              <h2 className="mb-6">Get in touch</h2>
+              <h2 className="mb-6">Kontakta oss</h2>
               <p className="text-lg text-muted-foreground mb-12">
-                Need a quote or have questions? Fill out the form below and we will get back to you within 24 hours.
+                Behöver du en offert eller har du frågor? Fyll i formuläret nedan så återkommer vi inom 24 timmar.
               </p>
 
               <div className="mb-8">
                 <p className="text-lg">
-                  <span className="font-semibold">Email:</span>{' '}
+                  <span className="font-semibold">E-post:</span>{' '}
                   <a href="mailto:info@kramforsskog.se" className="text-primary hover:underline">
                     info@kramforsskog.se
                   </a>

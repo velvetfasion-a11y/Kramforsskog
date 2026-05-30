@@ -17,7 +17,20 @@ npm run dev
 - **Website:** http://localhost:3000
 - **PocketBase admin:** http://localhost:8090/_/
 
-The contact form saves submissions to the `inquiries` collection.
+The contact form sends inquiries via [EmailJS](https://www.emailjs.com/).
+
+### EmailJS setup
+
+1. Copy `.env.example` to `.env` in the **project root** (same folder as `package.json`).
+2. Add your **Public Key** from [EmailJS Account](https://dashboard.emailjs.com/admin/account):
+
+```
+VITE_EMAILJS_PUBLIC_KEY=your_public_key_here
+```
+
+3. On Render, add the same variable to the **static site** (`kramforsskog-web`) and redeploy.
+
+Service ID `service_ziaqn1n` and template `template_27wh01k` are configured in code.
 
 ## Environment
 

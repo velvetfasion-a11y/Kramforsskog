@@ -28,19 +28,19 @@ function Header() {
               onClick={() => scrollToSection('hero')}
               className="text-white/80 hover:text-white transition-colors duration-200 font-medium"
             >
-              Home
+              Hem
             </button>
             <button
               onClick={() => scrollToSection('services')}
               className="text-white/80 hover:text-white transition-colors duration-200 font-medium"
             >
-              Services
+              Tjänster
             </button>
             <button
               onClick={() => scrollToSection('contact')}
               className="text-white/80 hover:text-white transition-colors duration-200 font-medium"
             >
-              Contact
+              Kontakt
             </button>
           </nav>
 
@@ -50,7 +50,7 @@ function Header() {
           >
             <a href={`tel:${PHONE_TEL}`} className="flex items-center gap-2">
               <Phone className="w-4 h-4" />
-              <span className="hidden sm:inline">Call now</span>
+              <span className="hidden sm:inline">Ring nu</span>
               <span className="sr-only">{PHONE_DISPLAY}</span>
             </a>
           </Button>

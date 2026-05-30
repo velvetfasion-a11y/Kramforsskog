@@ -6,20 +6,22 @@ import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
-import pb from '@/lib/pocketbaseClient';
+import { sendContactEmail } from '@/lib/emailjs';
 
 const REQUIRED_FIELDS = ['name', 'phone', 'email', 'projectDescription'];
 
 const fieldErrorClass =
   'border-destructive focus-visible:ring-destructive focus-visible:ring-1';
 
+const emptyForm = {
+  name: '',
+  phone: '',
+  email: '',
+  projectDescription: '',
+};
+
 function ContactForm() {
-  const [formData, setFormData] = useState({
-    name: '',
-    phone: '',
-    email: '',
-    projectDescription: ''
-  });
+  const [formData, setFormData] = useState(emptyForm);
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -27,7 +29,7 @@ function ContactForm() {
     const next = {};
     for (const field of REQUIRED_FIELDS) {
       if (!formData[field].trim()) {
-        next[field] = 'required';
+        next[field] = 'obligatoriskt';
       }
     }
     setErrors(next);
@@ -38,7 +40,7 @@ function ContactForm() {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
     if (errors[name]) {
       setErrors(prev => {
@@ -58,18 +60,20 @@ function ContactForm() {
     setIsSubmitting(true);
 
     try {
-      await pb.collection('inquiries').create(formData, { $autoCancel: false });
-      toast('Thank you. We will contact you soon.');
-      setFormData({
-        name: '',
-        phone: '',
-        email: '',
-        projectDescription: ''
-      });
+      await sendContactEmail(formData);
+      toast.success('Tack! Din förfrågan har skickats. Vi hör av oss snart.');
+      setFormData(emptyForm);
       setErrors({});
     } catch (error) {
-      console.error('Form submission error:', error);
-      toast('Failed to submit inquiry. Please try again.');
+      console.error('EmailJS submission error:', error);
+
+      if (error?.message === 'MISSING_PUBLIC_KEY') {
+        toast.error(
+          'E-post är inte konfigurerad. Lägg till VITE_EMAILJS_PUBLIC_KEY i .env (lokalt) eller i Render.',
+        );
+      } else {
+        toast.error('Kunde inte skicka förfrågan. Försök igen eller ring oss.');
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -81,14 +85,14 @@ function ContactForm() {
   const fieldInputClass = (field) =>
     cn(
       'bg-white text-gray-900 placeholder:text-gray-400',
-      errors[field] && fieldErrorClass
+      errors[field] && fieldErrorClass,
     );
 
   return (
     <form onSubmit={handleSubmit} noValidate className="space-y-6 max-w-2xl">
       <div className="space-y-2">
         <Label htmlFor="name" className={fieldLabelClass('name')}>
-          Name
+          Namn
         </Label>
         <Input
           id="name"
@@ -97,20 +101,21 @@ function ContactForm() {
           value={formData.name}
           onChange={handleChange}
           className={fieldInputClass('name')}
-          placeholder="Your name"
+          placeholder="Ditt namn"
+          disabled={isSubmitting}
           aria-invalid={Boolean(errors.name)}
           aria-describedby={errors.name ? 'name-error' : undefined}
         />
         {errors.name && (
           <p id="name-error" className="text-sm text-destructive">
-            required
+            obligatoriskt
           </p>
         )}
       </div>
 
       <div className="space-y-2">
         <Label htmlFor="phone" className={fieldLabelClass('phone')}>
-          Phone
+          Telefon
         </Label>
         <Input
           id="phone"
@@ -119,20 +124,21 @@ function ContactForm() {
           value={formData.phone}
           onChange={handleChange}
           className={fieldInputClass('phone')}
-          placeholder="Your phone number"
+          placeholder="Ditt telefonnummer"
+          disabled={isSubmitting}
           aria-invalid={Boolean(errors.phone)}
           aria-describedby={errors.phone ? 'phone-error' : undefined}
         />
         {errors.phone && (
           <p id="phone-error" className="text-sm text-destructive">
-            required
+            obligatoriskt
           </p>
         )}
       </div>
 
       <div className="space-y-2">
         <Label htmlFor="email" className={fieldLabelClass('email')}>
-          Email
+          E-post
         </Label>
         <Input
           id="email"
@@ -141,20 +147,21 @@ function ContactForm() {
           value={formData.email}
           onChange={handleChange}
           className={fieldInputClass('email')}
-          placeholder="your.email@example.com"
+          placeholder="din.epost@exempel.se"
+          disabled={isSubmitting}
           aria-invalid={Boolean(errors.email)}
           aria-describedby={errors.email ? 'email-error' : undefined}
         />
         {errors.email && (
           <p id="email-error" className="text-sm text-destructive">
-            required
+            obligatoriskt
           </p>
         )}
       </div>
 
       <div className="space-y-2">
         <Label htmlFor="projectDescription" className={fieldLabelClass('projectDescription')}>
-          Project description
+          Projektbeskrivning
         </Label>
         <Textarea
           id="projectDescription"
@@ -162,13 +169,14 @@ function ContactForm() {
           value={formData.projectDescription}
           onChange={handleChange}
           className={cn(fieldInputClass('projectDescription'), 'min-h-[120px]')}
-          placeholder="Describe your project: area size, tree types, access, timeline..."
+          placeholder="Beskriv ditt projekt: yta, trädslag, tillgänglighet, tidsplan..."
+          disabled={isSubmitting}
           aria-invalid={Boolean(errors.projectDescription)}
           aria-describedby={errors.projectDescription ? 'projectDescription-error' : undefined}
         />
         {errors.projectDescription && (
           <p id="projectDescription-error" className="text-sm text-destructive">
-            required
+            obligatoriskt
           </p>
         )}
       </div>
@@ -178,7 +186,7 @@ function ContactForm() {
         disabled={isSubmitting}
         className="w-full sm:w-auto"
       >
-        {isSubmitting ? 'Sending...' : 'Send inquiry'}
+        {isSubmitting ? 'Skickar...' : 'Skicka förfrågan'}
       </Button>
     </form>
   );

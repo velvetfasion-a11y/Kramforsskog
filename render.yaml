@@ -40,3 +40,5 @@ services:
           type: web
           name: kramforsskog-api
           envVarKey: RENDER_EXTERNAL_URL
+      - key: VITE_EMAILJS_PUBLIC_KEY
+        sync: false

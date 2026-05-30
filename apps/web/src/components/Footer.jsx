@@ -10,15 +10,15 @@ function Footer() {
           <div>
             <span className="text-xl font-bold text-white">Kramfors Skog AB</span>
             <p className="mt-4 text-sm">
-              Professional tree felling and forest management services for properties of all sizes.
+              Professionell trädfällning och skogsvård för fastigheter i alla storlekar.
             </p>
           </div>
 
           <div>
-            <span className="font-semibold text-white block mb-4">Contact</span>
-            <p className="text-sm">Email: info@kramforsskog.se</p>
+            <span className="font-semibold text-white block mb-4">Kontakt</span>
+            <p className="text-sm">E-post: info@kramforsskog.se</p>
             <p className="text-sm mt-2">
-              Phone:{' '}
+              Telefon:{' '}
               <a href={`tel:${PHONE_TEL}`} className="hover:text-white transition-colors duration-200">
                 {PHONE_DISPLAY}
               </a>
@@ -26,20 +26,20 @@ function Footer() {
           </div>
 
           <div>
-            <span className="font-semibold text-white block mb-4">Legal</span>
+            <span className="font-semibold text-white block mb-4">Juridik</span>
             <div className="flex flex-col gap-2 text-sm">
               <a href="#" className="hover:text-white transition-colors duration-200">
-                Privacy policy
+                Integritetspolicy
               </a>
               <a href="#" className="hover:text-white transition-colors duration-200">
-                Terms of service
+                Användarvillkor
               </a>
             </div>
           </div>
         </div>
 
         <div className="mt-12 pt-8 border-t border-white/10 text-sm text-center">
-          <p>&copy; {new Date().getFullYear()} Kramfors Skog AB. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Kramfors Skog AB. Alla rättigheter förbehållna.</p>
         </div>
       </div>
     </footer>
